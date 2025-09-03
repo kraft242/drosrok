@@ -5,3 +5,4 @@ IndentWidth: 4
 SpaceBeforeParens: ControlStatements
 AllowShortFunctionsOnASingleLine: None
 ShortCaseStatementsAlignmentStyle: Enabled
+AlignAfterOpenBracket: BlockIndent
