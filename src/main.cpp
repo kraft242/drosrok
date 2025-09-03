@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 {
     std::locale::global(std::locale("sv_SE.utf8")); // Set UTF-8 locale
     std::wcout.imbue(std::locale());
+
     if (argc != 2)
     {
         std::cout << "Användning: " << argv[0] << "[SÖKTERM]" << std::endl

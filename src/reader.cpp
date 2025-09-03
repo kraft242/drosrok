@@ -27,6 +27,7 @@ std::vector<std::wstring> getWords()
         word.erase(
             std::remove_if(word.begin(), word.end(), notInAlphabet), word.end()
         );
+        std::transform(word.begin(), word.end(), word.begin(), std::towlower);
         if (!word.empty())
         {
             words.push_back(word);

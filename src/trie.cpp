@@ -72,14 +72,14 @@ getMatches(const Trie &root, const std::wstring &query)
 {
     std::vector<std::wstring> matches;
 
-    using State = std::tuple<const Trie *, const size_t, const std::wstring>;
+    using State = std::tuple<const Trie *, const size_t, std::wstring>;
 
     std::queue<State> queue;
     queue.push({ &root, size_t(), std::wstring() });
 
     while (queue.size())
     {
-        const auto [node, index, word] = queue.front();
+        auto [node, index, word] = queue.front();
         queue.pop();
 
         if (index >= query.size() || node->isLeaf())
