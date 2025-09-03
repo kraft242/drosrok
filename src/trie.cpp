@@ -12,9 +12,8 @@ Trie::Trie(const wchar_t &character) : m_character(character), m_children{}
     m_children.fill(nullptr);
 }
 
-Trie::Trie() : m_character(INVALID), m_children{}
+Trie::Trie() : Trie(INVALID)
 {
-    m_children.fill(nullptr);
 }
 
 Trie::~Trie()
