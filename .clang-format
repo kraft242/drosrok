@@ -1,0 +1,7 @@
+BasedOnStyle: GNU
+BreakBeforeBraces: Allman
+BreakAfterReturnType: Automatic
+IndentWidth: 4
+SpaceBeforeParens: ControlStatements
+AllowShortFunctionsOnASingleLine: None
+ShortCaseStatementsAlignmentStyle: Enabled
