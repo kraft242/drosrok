@@ -18,11 +18,11 @@ include_directories(${GTEST_INCLUDE_DIRS})
 # Collect all test source files
 file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 
+# Setup wordlist path
+configure_file(${CMAKE_SOURCE_DIR}/data/swedish.txt ${CMAKE_BINARY_DIR}/swedish.txt COPYONLY)
+
 # Test executable
-add_executable(tests ${TEST_SOURCES} ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/trie.cpp)
+add_executable(tests ${TEST_SOURCES} ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/trie.cpp ${SRC_DIR}/reader.cpp)
 target_include_directories(tests PRIVATE ${INCLUDE_DIR})
 target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
 
-# Test target
-enable_testing()
-add_test(NAME AllTests COMMAND tests)

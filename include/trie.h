@@ -9,12 +9,17 @@
 
 #define WILDCARD L'_'
 
+class Trie;
+
+using Children = std::array<Trie *, ALPHABET_SIZE>;
+
 class Trie
 {
   private:
     static constexpr wchar_t INVALID = L'\0';
     wchar_t m_character;
-    std::array<Trie *, ALPHABET_SIZE> m_children;
+    Children m_children;
+    bool m_isEnd;
 
   public:
     Trie();
@@ -23,8 +28,10 @@ class Trie
 
     void insert(const std::wstring &word);
     wchar_t character() const;
-    std::array<Trie *, ALPHABET_SIZE> children() const;
+    Children children() const;
     bool isLeaf() const;
+    void setEnd();
+    bool isEnd() const;
 };
 
 Trie getTrie(const std::vector<std::wstring> &words);

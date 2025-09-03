@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-const std::string FILEPATH = "../data/swedish.txt";
+const std::string FILEPATH = "swedish.txt";
 
 const std::string LOCALE = "sv_SE.UTF-8";
 

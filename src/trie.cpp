@@ -7,7 +7,8 @@
 #include <queue>
 #include <utility>
 
-Trie::Trie(const wchar_t &character) : m_character(character), m_children{}
+Trie::Trie(const wchar_t &character)
+    : m_character(character), m_children{}, m_isEnd(false)
 {
     m_children.fill(nullptr);
 }
@@ -37,6 +38,7 @@ void Trie::insert(const std::wstring &word)
         }
         node = node->m_children[idx];
     }
+    node->setEnd();
 }
 
 bool Trie::isLeaf() const
@@ -45,6 +47,16 @@ bool Trie::isLeaf() const
         m_children.begin(), m_children.end(),
         [](Trie *child) { return child != nullptr; }
     );
+}
+
+void Trie::setEnd()
+{
+    m_isEnd = true;
+}
+
+bool Trie::isEnd() const
+{
+    return m_isEnd;
 }
 
 Trie getTrie(const std::vector<std::wstring> &words)
@@ -62,9 +74,50 @@ wchar_t Trie::character() const
     return m_character;
 }
 
-std::array<Trie *, ALPHABET_SIZE> Trie::children() const
+Children Trie::children() const
 {
     return m_children;
+}
+
+void search(
+    const Trie *node, std::vector<std::wstring> &matches,
+    const std::wstring &query, std::wstring &word, const size_t index
+)
+{
+    if (index == query.size())
+    {
+        if (node->isEnd())
+        {
+            matches.push_back(word);
+        }
+        return;
+    }
+
+    const wchar_t c = query[index];
+    const Children children = node->children();
+
+    if (c == WILDCARD)
+    {
+        for (size_t i = 0; i < ALPHABET_SIZE; i++)
+        {
+            if (children[i] != nullptr)
+            {
+                word.push_back(indexToChar(i));
+                search(children[i], matches, query, word, index + 1);
+                word.pop_back();
+            }
+        }
+    }
+    else
+    {
+        size_t i = charToIndex(c);
+        if (children[i] != nullptr)
+        {
+            word.push_back(c);
+            search(children[i], matches, query, word, index + 1);
+            word.pop_back();
+        }
+    }
 }
 
 std::vector<std::wstring>
@@ -72,51 +125,9 @@ getMatches(const Trie &root, const std::wstring &query)
 {
     std::vector<std::wstring> matches;
 
-    using State = std::tuple<const Trie *, const size_t, std::wstring>;
+    std::wstring word;
 
-    std::queue<State> queue;
-    queue.push({ &root, size_t(), std::wstring() });
-
-    while (queue.size())
-    {
-        auto [node, index, word] = queue.front();
-        queue.pop();
-
-        if (index >= query.size() || node->isLeaf())
-        {
-            if (index == query.size())
-            {
-                matches.push_back(word);
-            }
-            continue;
-        }
-
-        const auto children = node->children();
-        const wchar_t c = query[index];
-        if (c == WILDCARD)
-        {
-            for (size_t i = 0; i < ALPHABET_SIZE; i++)
-            {
-                const Trie *child = children[i];
-                if (child != nullptr)
-                {
-                    queue.push(
-                        std::make_tuple(
-                            child, index + 1, word + indexToChar(i)
-                        )
-                    );
-                }
-            }
-        }
-        else
-        {
-            const Trie *child = children[charToIndex(c)];
-            if (child != nullptr)
-            {
-                queue.push(std::make_tuple(child, index + 1, word + c));
-            }
-        }
-    }
+    search(&root, matches, query, word, 0);
 
     return matches;
 }
