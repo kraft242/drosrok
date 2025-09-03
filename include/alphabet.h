@@ -12,9 +12,16 @@ constexpr std::array<wchar_t, ALPHABET_SIZE> ALPHABET{
     L'ç', L'è', L'é', L'ê', L'ë', L'ñ', L'ö', L'ü'
 };
 
+/**
+ * Returns the index of c in ALPHABET.
+ * @throws std::invalid_argument if c is not in ALPHABET.
+ */
 size_t charToIndex(const wchar_t &c);
 
+/**
+ * Returns the wchar_t at index in ALPHABET.
+ * @throws std::invalid_argument if index is larger than ALPHABET.
+ */
 wchar_t indexToChar(const size_t &index);
-
 
 #endif // ALPHABET_H
