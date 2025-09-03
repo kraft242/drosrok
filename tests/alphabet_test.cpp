@@ -8,17 +8,16 @@
 
 TEST(TEST_SUITE, CharToIndexValidCharacters)
 {
-    const std::wstring alphabet = L"abcdefghijklmnopqrstuvwxyzåäö";
-    for (size_t i = 0; i < alphabet.size(); i++)
+    for (size_t i = 0; i < ALPHABET_SIZE; i++)
     {
-        ASSERT_EQ(charToIndex(alphabet[i]), i);
+        ASSERT_EQ(charToIndex(ALPHABET[i]), i);
     }
 }
 
 TEST(TEST_SUITE, CharToIndexInvalidCharacters)
 {
-    const std::wstring invalid = L"éüñçøæœßжяюфэαβγδθλπω@#$%&*()[]{}<>|~^`'\";"
-                                 L":/\\_+=¤©®™§¶†‡•‰′″∑∆∫√∞≈≠≤≥±÷×€£¥¢₩₽₹µ";
+    const std::wstring invalid = L"øæœßжяюфэαβγδθλπω@#$%&*()[]{}<>|~^`'\"; : "
+                                 L"/\\_+=¤©®™§¶†‡•‰′″∑∆∫√∞≈≠≤≥±÷×€£¥¢₩₽₹µ ";
     for (size_t i = 0; i < invalid.size(); i++)
     {
         ASSERT_THROW(charToIndex(invalid[i]), std::invalid_argument);
@@ -29,16 +28,16 @@ TEST(TEST_SUITE, CharToIndexInvalidCharacters)
 
 TEST(TEST_SUITE, IndexToCharValidIndexes)
 {
-    const std::wstring alphabet = L"abcdefghijklmnopqrstuvwxyzåäö";
-    for (size_t i = 0; i < alphabet.size(); i++)
+    for (size_t i = 0; i < ALPHABET.size(); i++)
     {
-        ASSERT_EQ(indexToChar(i), alphabet[i]);
+        ASSERT_EQ(indexToChar(i), ALPHABET[i]);
     }
 }
 
 TEST(TEST_SUITE, IndexToCharInvalidIndexes)
 {
-    const std::vector<size_t> invalid{ 29, 30, 100, 1351356136 };
+    const std::vector<size_t> invalid{ ALPHABET.size(), ALPHABET.size() + 1,
+                                       100, 1351356136 };
     for (const size_t &index : invalid)
     {
         ASSERT_THROW(indexToChar(index), std::invalid_argument);

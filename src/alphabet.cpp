@@ -1,14 +1,16 @@
 #include "alphabet.h"
 #include <algorithm>
+#include <cwctype>
+#include <iostream>
 #include <stdexcept>
 
 size_t charToIndex(const wchar_t &c)
 {
     const auto it
-        = std::find(ALPHABET.begin(), ALPHABET.end(), std::tolower(c));
+        = std::find(ALPHABET.begin(), ALPHABET.end(), std::towlower(c));
     if (it == ALPHABET.end())
     {
-        throw std::invalid_argument("Invalid character.");
+        throw std::invalid_argument("Invalid character");
     }
     return std::distance(ALPHABET.begin(), it);
 }

@@ -8,7 +8,7 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/tests)
 
 # Main executable
-add_executable(drosrok ${SRC_DIR}/main.cpp ${SRC_DIR}/alphabet.cpp)
+add_executable(drosrok ${SRC_DIR}/main.cpp ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/reader.cpp ${SRC_DIR}/trie.cpp)
 target_include_directories(drosrok PRIVATE ${INCLUDE_DIR})
 
 # GoogleTest
