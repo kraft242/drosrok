@@ -20,8 +20,9 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        std::cout << "Användning: " << argv[0] << "[SÖKTERM]" << std::endl
-                  << "Markera okända tecken med understreck (_)." << std::endl;
+        std::cout << "Usage: " << argv[0] << " [QUERY]" << std::endl
+                  << "Mark unknown characters with underscores (_)."
+                  << std::endl;
         return 0;
     }
 
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
     const std::vector<std::wstring> words = getWords();
     const std::vector<std::wstring> matches =
         getMatches(words, ALPHABET::normalize(query));
-    std::wcout << "Hittade " << matches.size() << " matchningar:" << std::endl;
+    std::wcout << "Found " << matches.size() << " matches:" << std::endl;
     for (const std::wstring &match : matches)
     {
         std::wcout << ALPHABET::toUpper(match) << std::endl;
