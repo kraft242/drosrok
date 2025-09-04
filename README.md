@@ -10,6 +10,7 @@ Move to the root of this repo and run:
 
 ```shell
 $ mkdir build && cd build
+$ cmake ..
 $ make
 ```
 
