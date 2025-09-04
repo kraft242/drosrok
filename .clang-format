@@ -6,3 +6,4 @@ SpaceBeforeParens: ControlStatements
 AllowShortFunctionsOnASingleLine: None
 ShortCaseStatementsAlignmentStyle: Enabled
 AlignAfterOpenBracket: BlockIndent
+BreakBeforeBinaryOperators: None
