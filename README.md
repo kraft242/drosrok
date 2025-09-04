@@ -32,3 +32,7 @@ The program also contains unit tests, which can be executed by running the below
 ```shell
 $ ./tests
 ```
+
+## Acknowledgements
+
+The wordlist was taken from kkrypt0nn's wordlists ([https://github.com/kkrypt0nn/wordlists](https://github.com/kkrypt0nn/wordlists)).
