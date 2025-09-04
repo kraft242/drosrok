@@ -4,42 +4,30 @@
 
 #define TEST_SUITE AlphabetTest
 
-/* charToIndex */
-
-TEST(TEST_SUITE, CharToIndexValidCharacters)
+TEST(TEST_SUITE, NormalizeChars)
 {
-    for (size_t i = 0; i < ALPHABET_SIZE; i++)
+    for (size_t i = 0; i < ALPHABET::SIZE; i++)
     {
-        ASSERT_EQ(charToIndex(ALPHABET[i]), i);
+        const wchar_t upper = ALPHABET::UPPER[i];
+        const wchar_t lower = ALPHABET::LOWER[i];
+
+        const wchar_t uNormal = ALPHABET::normalize(upper);
+        const wchar_t lNormal = ALPHABET::normalize(lower);
+
+        const wchar_t normal = ALPHABET::REPLACEMENT[i];
+
+        ASSERT_EQ(uNormal, lNormal);
+        ASSERT_EQ(uNormal, normal);
+        ASSERT_EQ(lNormal, normal);
     }
 }
 
-TEST(TEST_SUITE, CharToIndexInvalidCharacters)
+TEST(TEST_SUITE, NormalizeString)
 {
-    const std::wstring invalid = L"øæœßжяюфэαβγδθλπω@#$%&*()[]{}<>|~^`'\"; : "
-                                 L"/\\_+=¤©®™§¶†‡•‰′″∑∆∫√∞≈≠≤≥±÷×€£¥¢₩₽₹µ ";
-    for (size_t i = 0; i < invalid.size(); i++)
-    {
-        ASSERT_THROW(charToIndex(invalid[i]), std::invalid_argument);
-    }
-}
+    const std::wstring s = L"paNnKakA";
 
-/* indexToChar */
+    const std::wstring expected = L"pannkaka";
+    const std::wstring actual = ALPHABET::normalize(s);
 
-TEST(TEST_SUITE, IndexToCharValidIndexes)
-{
-    for (size_t i = 0; i < ALPHABET.size(); i++)
-    {
-        ASSERT_EQ(indexToChar(i), ALPHABET[i]);
-    }
-}
-
-TEST(TEST_SUITE, IndexToCharInvalidIndexes)
-{
-    const std::vector<size_t> invalid{ ALPHABET.size(), ALPHABET.size() + 1,
-                                       100, 1351356136 };
-    for (const size_t &index : invalid)
-    {
-        ASSERT_THROW(indexToChar(index), std::invalid_argument);
-    }
+    ASSERT_EQ(expected, actual);
 }

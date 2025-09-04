@@ -4,11 +4,6 @@
 #include <fstream>
 #include <sstream>
 
-bool notInAlphabet(const wchar_t &c)
-{
-    return std::find(ALPHABET.begin(), ALPHABET.end(), c) == ALPHABET.end();
-}
-
 std::vector<std::wstring> getWords()
 {
     std::vector<std::wstring> words;
@@ -24,10 +19,7 @@ std::vector<std::wstring> getWords()
 
     while (std::getline(file, word))
     {
-        word.erase(
-            std::remove_if(word.begin(), word.end(), notInAlphabet), word.end()
-        );
-        std::transform(word.begin(), word.end(), word.begin(), std::towlower);
+        word = ALPHABET::normalize(word);
         if (!word.empty())
         {
             words.push_back(word);

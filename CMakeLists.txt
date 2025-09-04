@@ -3,12 +3,20 @@ project(drosrok)
 
 set(CMAKE_CXX_STANDARD 23)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/tests)
 
 # Main executable
-add_executable(drosrok ${SRC_DIR}/main.cpp ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/reader.cpp ${SRC_DIR}/trie.cpp)
+add_executable(drosrok ${SRC_DIR}/main.cpp ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/reader.cpp ${SRC_DIR}/match.cpp)
 target_include_directories(drosrok PRIVATE ${INCLUDE_DIR})
 
 # GoogleTest
@@ -22,7 +30,7 @@ file(GLOB TEST_SOURCES ${TEST_DIR}/*.cpp)
 configure_file(${CMAKE_SOURCE_DIR}/data/swedish.txt ${CMAKE_BINARY_DIR}/swedish.txt COPYONLY)
 
 # Test executable
-add_executable(tests ${TEST_SOURCES} ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/trie.cpp ${SRC_DIR}/reader.cpp)
+add_executable(tests ${TEST_SOURCES} ${SRC_DIR}/alphabet.cpp ${SRC_DIR}/reader.cpp ${SRC_DIR}/match.cpp)
 target_include_directories(tests PRIVATE ${INCLUDE_DIR})
 target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
 

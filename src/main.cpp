@@ -1,6 +1,6 @@
 #include "alphabet.h"
+#include "match.h"
 #include "reader.h"
-#include "trie.h"
 #include <codecvt>
 #include <iostream>
 #include <locale>
@@ -28,12 +28,12 @@ int main(int argc, char *argv[])
     const std::wstring query = convertToWstring(argv[1]);
 
     const std::vector<std::wstring> words = getWords();
-    Trie root = getTrie(words);
-    const std::vector<std::wstring> matches = getMatches(root, query);
+    const std::vector<std::wstring> matches =
+        getMatches(words, ALPHABET::normalize(query));
     std::wcout << "Hittade " << matches.size() << " matchningar:" << std::endl;
     for (const std::wstring &match : matches)
     {
-        std::wcout << match << std::endl;
+        std::wcout << ALPHABET::toUpper(match) << std::endl;
     }
     return 0;
 }
